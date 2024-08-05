@@ -1,0 +1,62 @@
+[
+    {
+      "id": 1,
+      "name": "Lightning McQueen",
+      "model": "Stock Car",
+      "imageUrl": "https://example.com/images/lightning_mcqueen.png"
+    },
+    {
+      "id": 2,
+      "name": "Mater",
+      "model": "Tow Truck",
+      "imageUrl": "https://example.com/images/mater.png"
+    },
+    {
+      "id": 3,
+      "name": "Sally Carrera",
+      "model": "Porsche 911",
+      "imageUrl": "https://example.com/images/sally_carrera.png"
+    },
+    {
+      "id": 4,
+      "name": "Doc Hudson",
+      "model": "Hudson Hornet",
+      "imageUrl": "https://example.com/images/doc_hudson.png"
+    },
+    {
+      "id": 5,
+      "name": "Ramone",
+      "model": "Lowrider",
+      "imageUrl": "https://example.com/images/ramone.png"
+    },
+    {
+      "id": 6,
+      "name": "Luigi",
+      "model": "Fiat 500",
+      "imageUrl": "https://example.com/images/luigi.png"
+    },
+    {
+      "id": 7,
+      "name": "Guido",
+      "model": "Forklift",
+      "imageUrl": "https://example.com/images/guido.png"
+    },
+    {
+      "id": 8,
+      "name": "Chick Hicks",
+      "model": "Stock Car",
+      "imageUrl": "https://example.com/images/chick_hicks.png"
+    },
+    {
+      "id": 9,
+      "name": "Fillmore",
+      "model": "VW Bus",
+      "imageUrl": "https://example.com/images/fillmore.png"
+    },
+    {
+      "id": 10,
+      "name": "Sheriff",
+      "model": "Police Car",
+      "imageUrl": "https://example.com/images/sheriff.png"
+    }
+  ]
