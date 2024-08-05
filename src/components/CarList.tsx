@@ -75,8 +75,8 @@ const CarList: React.FC = () => {
                   >
                     View
                   </Button>
-                  <Button onClick={() => setEditingCar(car)}>Edit</Button>
-                  <Button onClick={() => deleteCar(car.id)}>Delete</Button>
+                  <Button onClick={() => setEditingCar(car)}>Editar</Button>
+                  <Button onClick={() => deleteCar(car.id)}>Deletar</Button>
                 </Box>
               </CardContent>
             </Card>

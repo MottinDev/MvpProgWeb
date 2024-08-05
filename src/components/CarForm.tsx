@@ -38,14 +38,14 @@ const CarForm: React.FC<CarFormProps> = ({ car, onSave }) => {
   return (
     <Box component="form" noValidate autoComplete="off" sx={{ mb: 2 }}>
       <TextField
-        label="Name"
+        label="Nome"
         value={name}
         onChange={(e) => setName(e.target.value)}
         fullWidth
         margin="normal"
       />
       <TextField
-        label="Model"
+        label="Modelo"
         value={model}
         onChange={(e) => setModel(e.target.value)}
         fullWidth
