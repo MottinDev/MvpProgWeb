@@ -1,10 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home'; // A página principal com a lista de carros
-import CarList from './components/CarList'; // Componente com a lista de carros
-import CarDetails from './pages/CarDetails'; // Página de detalhes do carro
-import NotFound from './pages/NotFound'; // Página 404 para URLs não encontradas
-import Header from './components/Header';
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import CarList from './components/CarList'
+import CarDetails from './pages/CarDetails'
+import NotFound from './pages/NotFound'
+import Header from './components/Header'
+import RentPage from './pages/RentPage'
+import CustomerRegister from './pages/CustomerRegister'
 
 const App: React.FC = () => {
   return (
@@ -13,11 +15,13 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<CarList />} />
-        <Route path="/cars/:id" element={<CarDetails />} />
+        <Route path="/car-details/:id" element={<CarDetails />} />
+        <Route path="/rent/:id" element={<RentPage />} />
+        <Route path="/customer-register" element={<CustomerRegister />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App

@@ -1,14 +1,14 @@
 // src/pages/Home.tsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import CarList from "../components/CarList";
 
 const Home: React.FC = () => {
-  return (
-    <div>
-      <h1>Bem vindo ao Marquinhos Veiculos</h1>
-      <p><Link to="/cars">Ver Lista de Carros</Link></p>
-    </div>
-  );
+	return (
+		<div className="home">
+			<h1>Bem vindo ao Marquinhos Veiculos</h1>
+			<CarList />
+		</div>
+	);
 };
 
 export default Home;
