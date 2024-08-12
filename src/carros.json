@@ -1,62 +1,82 @@
 [
-  {
-    "id": 1,
-    "name": "Lightning McQueen",
-    "model": "Stock Car",
-    "imageUrl": "public/car-logos/car.jpg"
-  },
-  {
-    "id": 2,
-    "name": "Mater",
-    "model": "Tow Truck",
-    "imageUrl": "public/car-logos/materCarros.jpeg"
-  },
-  {
-    "id": 3,
-    "name": "Sally Carrera",
-    "model": "Porsche 911",
-    "imageUrl": "public/car-logos/sallycarrera.jpeg"
-  },
-  {
-    "id": 4,
-    "name": "Doc Hudson",
-    "model": "Hudson Hornet",
-    "imageUrl": "public/car-logos/DocHudson.jpeg"
-  },
-  {
-    "id": 5,
-    "name": "Ramone",
-    "model": "Lowrider",
-    "imageUrl": "public/car-logos/RamoneCars.jpeg"
-  },
-  {
-    "id": 6,
-    "name": "Luigi",
-    "model": "Fiat 500",
-    "imageUrl": "public/car-logos/LuigiCars.jpeg"
-  },
-  {
-    "id": 7,
-    "name": "Guido",
-    "model": "Forklift",
-    "imageUrl": "public/car-logos/GuidoCars.jpeg"
-  },
-  {
-    "id": 8,
-    "name": "Chick Hicks",
-    "model": "Stock Car",
-    "imageUrl": "public/car-logos/chickhicks.jpeg"
-  },
-  {
-    "id": 9,
-    "name": "Fillmore",
-    "model": "VW Bus",
-    "imageUrl": "public/car-logos/FilmoreCarros.jpeg"
-  },
-  {
-    "id": 10,
-    "name": "Sheriff",
-    "model": "Police Car",
-    "imageUrl": "public/car-logos/SheriffCarros.jpeg"
-  }
+	{
+		"id": 1,
+		"name": "Lightning McQueen",
+		"model": "Stock Car",
+		"imageUrl": "/car-logos/car.jpg",
+		"description": "Relâmpago McQueen é um carro de corrida ambicioso e confiante. Ele começa o filme focado em vencer a Copa Pistão, mas aprende ao longo da jornada sobre amizade e humildade.",
+		"rentalPricePerDay": 300
+	},
+	{
+		"id": 2,
+		"name": "Mater",
+		"model": "Tow Truck",
+		"imageUrl": "/car-logos/materCarros.jpeg",
+		"description": "Mate é um caminhão guincho simpático e desajeitado, conhecido por seu grande coração e lealdade. Ele se torna o melhor amigo de Relâmpago McQueen.",
+		"rentalPricePerDay": 150
+	},
+	{
+		"id": 3,
+		"name": "Sally Carrera",
+		"model": "Porsche 911",
+		"imageUrl": "/car-logos/sallycarrera.jpeg",
+		"description": "Sally é uma Porsche 911 elegante que deixou a vida agitada da cidade para viver em Radiator Springs. Ela é inteligente, independente e o interesse amoroso de Relâmpago McQueen.",
+		"rentalPricePerDay": 350
+	},
+	{
+		"id": 4,
+		"name": "Doc Hudson",
+		"model": "Hudson Hornet",
+		"imageUrl": "/car-logos/DocHudson.jpeg",
+		"description": "Doc Hudson é um veterano de corridas e médico em Radiator Springs. Um ex-campeão da Copa Pistão, ele se torna o mentor de Relâmpago McQueen, ensinando-lhe valiosas lições de vida.",
+		"rentalPricePerDay": 250
+	},
+	{
+		"id": 5,
+		"name": "Ramone",
+		"model": "Lowrider",
+		"imageUrl": "/car-logos/RamoneCars.jpeg",
+		"description": "Ramone é um Lowrider que possui uma oficina de pintura personalizada. Ele é apaixonado por arte e constantemente muda a própria pintura, expressando sua criatividade.",
+		"rentalPricePerDay": 200
+	},
+	{
+		"id": 6,
+		"name": "Luigi",
+		"model": "Fiat 500",
+		"imageUrl": "/car-logos/LuigiCars.jpeg",
+		"description": "Luigi é um Fiat 500 italiano apaixonado por pneus e dono da loja Casa Della Tires. Ele é entusiasmado e adora carros de corrida, especialmente as Ferraris.",
+		"rentalPricePerDay": 100
+	},
+	{
+		"id": 7,
+		"name": "Guido",
+		"model": "Forklift",
+		"imageUrl": "/car-logos/GuidoCars.jpeg",
+		"description": "Guido é um pequeno empilhador italiano que trabalha com Luigi. Ele é ágil e habilidoso em trocar pneus, e é um grande fã de corridas de Fórmula 1.",
+		"rentalPricePerDay": 80
+	},
+	{
+		"id": 8,
+		"name": "Chick Hicks",
+		"model": "Stock Car",
+		"imageUrl": "/car-logos/chickhicks.jpeg",
+		"description": "Chick Hicks é o principal rival de Relâmpago McQueen. Um carro de corrida competitivo e sem escrúpulos, ele está disposto a fazer qualquer coisa para vencer.",
+		"rentalPricePerDay": 300
+	},
+	{
+		"id": 9,
+		"name": "Fillmore",
+		"model": "VW Bus",
+		"imageUrl": "/car-logos/FilmoreCarros.jpeg",
+		"description": "Fillmore é uma Kombi Volkswagen dos anos 60, dono de uma loja de combustíveis orgânicos. Ele é relaxado e promove a paz e o estilo de vida alternativo.",
+		"rentalPricePerDay": 120
+	},
+	{
+		"id": 10,
+		"name": "Sheriff",
+		"model": "Police Car",
+		"imageUrl": "/car-logos/SheriffCarros.jpeg",
+		"description": "Sheriff é o carro da polícia de Radiator Springs, sempre zelando pela ordem na cidade. Ele é um personagem respeitado e tem um papel importante na manutenção da paz na comunidade.",
+		"rentalPricePerDay": 180
+	}
 ]

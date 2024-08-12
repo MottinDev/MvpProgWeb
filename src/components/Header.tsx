@@ -8,12 +8,17 @@ import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import CarRepairIcon from "@mui/icons-material/CarRepair";
+import InfoIcon from "@mui/icons-material/Info";
 
 const Header: React.FC = () => {
 	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorElNav(event.currentTarget);
 	};
+
 	const handleCloseNavMenu = () => {
 		setAnchorElNav(null);
 	};
@@ -22,7 +27,9 @@ const Header: React.FC = () => {
 		<AppBar style={{ padding: 3 }}>
 			<Toolbar>
 				<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-					Marquinhos Veículos
+					<Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+						Marquinhos Veículos
+					</Link>
 				</Typography>
 				<Box sx={{ display: { xs: "flex", md: "none" } }}>
 					<Button
@@ -30,9 +37,7 @@ const Header: React.FC = () => {
 						aria-controls="basic-menu"
 						aria-haspopup="true"
 						aria-expanded={anchorElNav ? "true" : undefined}
-						onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-							handleOpenNavMenu(event)
-						}
+						onClick={handleOpenNavMenu}
 						color="inherit"
 					>
 						<MenuIcon />
@@ -46,26 +51,32 @@ const Header: React.FC = () => {
 							"aria-labelledby": "basic-button",
 						}}
 					>
-						<MenuItem onClick={handleCloseNavMenu}>
-							<Link to="/">Home</Link>
+						<MenuItem onClick={handleCloseNavMenu} component={Link} to="/">
+							<HomeIcon sx={{ marginRight: 1 }} />
+							Home
 						</MenuItem>
-						<MenuItem onClick={handleCloseNavMenu}>
-							<Link to="/cars">Carros</Link>
+						<MenuItem onClick={handleCloseNavMenu} component={Link} to="/cars">
+							<CarRepairIcon sx={{ marginRight: 1 }} />
+							Carros
 						</MenuItem>
-						<MenuItem onClick={handleCloseNavMenu}>
-							<Link to="/profile">Perfil</Link>
+						<MenuItem onClick={handleCloseNavMenu} component={Link} to="/about">
+							<InfoIcon sx={{ marginRight: 1 }} />
+							Sobre
 						</MenuItem>
 					</Menu>
 				</Box>
 				<Box sx={{ display: { xs: "none", md: "flex" } }}>
 					<Button color="inherit" component={Link} to="/">
+						<HomeIcon sx={{ marginRight: 1 }} />
 						Home
 					</Button>
 					<Button color="inherit" component={Link} to="/cars">
+						<CarRepairIcon sx={{ marginRight: 1 }} />
 						Carros
 					</Button>
-					<Button color="inherit" component={Link} to="/profile">
-						Perfil
+					<Button color="inherit" component={Link} to="/about">
+						<InfoIcon sx={{ marginRight: 1 }} />
+						Sobre
 					</Button>
 				</Box>
 			</Toolbar>

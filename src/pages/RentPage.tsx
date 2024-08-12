@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Dialog,
@@ -14,15 +14,13 @@ import {
 import { useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import InputMask from 'react-input-mask'
 import carros from '../carros.json'
-
-interface Car {
-  id: number
-  name: string
-  model: string
-  imageUrl: string
-  description?: string
-}
+import Car from '../types/car'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 function getCarById(id: number): Car | undefined {
   return carros.find((car) => car.id === id)
@@ -35,16 +33,20 @@ const validationSchema = yup.object({
     .email('Formato de e-mail inválido')
     .required('E-mail é obrigatório'),
   phone: yup.string().required('Número de telefone é obrigatório'),
-  rentalPeriod: yup
-    .number()
-    .positive('Período de aluguel deve ser um número positivo')
-    .required('Período de aluguel é obrigatório'),
   startDate: yup
     .date()
     .required('Data de início é obrigatória')
     .min(new Date(), 'Data de início não pode ser no passado'),
+  endDate: yup
+    .date()
+    .required('Data de término é obrigatória')
+    .min(new Date(), 'Data de término não pode ser no passado'),
   driverLicense: yup
     .string()
+    .matches(
+      /^\d{11}$/,
+      'Número da carteira de motorista deve conter exatamente 11 dígitos'
+    )
     .required('Número da carteira de motorista é obrigatório'),
 })
 
@@ -52,15 +54,23 @@ export default function RentPage() {
   const { id } = useParams<{ id: string }>()
   const [openDialog, setOpenDialog] = React.useState(false)
 
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
+
   const carId = id ? parseInt(id) : 0
   const car = getCarById(carId)
+
+  const calculateTotalDays = (startDate: Date, endDate: Date): number => {
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
+  }
 
   const handleSubmit = (values: {
     name: string
     email: string
     phone: string
-    rentalPeriod: string
-    startDate: string
+    startDate: Date
+    endDate: Date
     driverLicense: string
   }) => {
     setOpenDialog(true)
@@ -71,7 +81,7 @@ export default function RentPage() {
       {car ? (
         <Box
           sx={{
-            marginTop: { xs: 10, sm: 3 },
+            marginTop: { xs: 10, sm: 11 },
             marginBottom: 3,
             padding: 2,
             backgroundColor: '#f5f5f5',
@@ -93,20 +103,23 @@ export default function RentPage() {
           <Typography variant="body1" paragraph sx={{ color: '#666' }}>
             {car.description || 'Nenhuma descrição disponível.'}
           </Typography>
+          <Typography variant="h6" sx={{ color: '#333', marginTop: 2 }}>
+            Preço do aluguel por dia: R${car.rentalPricePerDay.toFixed(2)}
+          </Typography>
 
           <Formik
             initialValues={{
               name: '',
               email: '',
               phone: '',
-              rentalPeriod: '',
-              startDate: '',
+              startDate: startDate ? format(startDate, 'yyyy-MM-dd') : '',
+              endDate: endDate ? format(endDate, 'yyyy-MM-dd') : '',
               driverLicense: '',
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, setFieldValue, values, touched, errors }) => (
               <Form>
                 <Grid container spacing={2} sx={{ marginTop: 4 }}>
                   <Grid item xs={12} sm={6}>
@@ -116,7 +129,7 @@ export default function RentPage() {
                       label="Nome"
                       name="name"
                       helperText={<ErrorMessage name="name" />}
-                      error={Boolean(<ErrorMessage name="name" />)}
+                      error={touched.name && Boolean(errors.name)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -126,53 +139,122 @@ export default function RentPage() {
                       label="E-mail"
                       name="email"
                       helperText={<ErrorMessage name="email" />}
-                      error={Boolean(<ErrorMessage name="email" />)}
+                      error={touched.email && Boolean(errors.email)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Field
-                      as={TextField}
-                      fullWidth
-                      label="Número de Telefone"
                       name="phone"
-                      helperText={<ErrorMessage name="phone" />}
-                      error={Boolean(<ErrorMessage name="phone" />)}
+                      render={({ field }: any) => (
+                        <InputMask
+                          {...field}
+                          mask="(99) 99999-9999"
+                          maskChar={null}
+                        >
+                          {(inputProps: any) => (
+                            <TextField
+                              {...inputProps}
+                              fullWidth
+                              label="Número de Telefone (Ex: (11) 98765-4321)"
+                              helperText={<ErrorMessage name="phone" />}
+                              error={touched.phone && Boolean(errors.phone)}
+                            />
+                          )}
+                        </InputMask>
+                      )}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Field
-                      as={TextField}
-                      fullWidth
-                      label="Número da Carteira de Motorista"
                       name="driverLicense"
-                      helperText={<ErrorMessage name="driverLicense" />}
-                      error={Boolean(<ErrorMessage name="driverLicense" />)}
+                      render={({ field }: any) => (
+                        <InputMask
+                          {...field}
+                          mask="99999999999"
+                          maskChar={null}
+                        >
+                          {(inputProps: any) => (
+                            <TextField
+                              {...inputProps}
+                              fullWidth
+                              label="Número da Carteira de Motorista (11 dígitos)"
+                              helperText={<ErrorMessage name="driverLicense" />}
+                              error={
+                                touched.driverLicense &&
+                                Boolean(errors.driverLicense)
+                              }
+                            />
+                          )}
+                        </InputMask>
+                      )}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      fullWidth
-                      label="Período de Aluguel (dias)"
-                      name="rentalPeriod"
-                      type="number"
-                      helperText={<ErrorMessage name="rentalPeriod" />}
-                      error={Boolean(<ErrorMessage name="rentalPeriod" />)}
-                    />
+                    {/* Data de Início */}
+                    <Box sx={{ position: 'relative', width: '100%' }}>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => {
+                          setStartDate(date)
+                          setFieldValue(
+                            'startDate',
+                            date ? format(date, 'yyyy-MM-dd') : ''
+                          )
+                        }}
+                        dateFormat="dd/MM/yyyy"
+                        locale={ptBR}
+                        customInput={
+                          <TextField
+                            fullWidth
+                            label="Data de Início"
+                            InputLabelProps={{ shrink: true }}
+                            error={
+                              touched.startDate && Boolean(errors.startDate)
+                            }
+                            helperText={<ErrorMessage name="startDate" />}
+                          />
+                        }
+                      />
+                    </Box>
                   </Grid>
                   <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      fullWidth
-                      label="Data de Início"
-                      name="startDate"
-                      type="date"
-                      InputLabelProps={{ shrink: true }}
-                      helperText={<ErrorMessage name="startDate" />}
-                      error={Boolean(<ErrorMessage name="startDate" />)}
-                    />
+                    {/* Data de Término */}
+                    <Box sx={{ position: 'relative', width: '100%' }}>
+                      <DatePicker
+                        selected={endDate}
+                        onChange={(date) => {
+                          setEndDate(date)
+                          setFieldValue(
+                            'endDate',
+                            date ? format(date, 'yyyy-MM-dd') : ''
+                          )
+                        }}
+                        dateFormat="dd/MM/yyyy"
+                        locale={ptBR}
+                        customInput={
+                          <TextField
+                            fullWidth
+                            label="Data de Término"
+                            InputLabelProps={{ shrink: true }}
+                            error={touched.endDate && Boolean(errors.endDate)}
+                            helperText={<ErrorMessage name="endDate" />}
+                          />
+                        }
+                      />
+                    </Box>
                   </Grid>
                 </Grid>
+
+                {startDate && endDate && (
+                  <Typography variant="h6" sx={{ color: '#333', marginTop: 2 }}>
+                    Total do aluguel: R$
+                    {(
+                      car.rentalPricePerDay *
+                      calculateTotalDays(startDate, endDate)
+                    ).toFixed(2)}
+                  </Typography>
+                )}
+
                 <Box sx={{ marginTop: 2 }}>
                   <Button
                     variant="contained"

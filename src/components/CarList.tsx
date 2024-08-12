@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+} from '@mui/material'
 import Box from '@mui/material/Box'
 import { Link } from 'react-router-dom'
 import carros from '../carros.json'
-
-interface Car {
-  id: number
-  name: string
-  model: string
-  imageUrl: string
-}
+import Car from '../types/car'
 
 const loadCars = (): Car[] => {
   const storedCars = localStorage.getItem('cars')
@@ -33,10 +32,22 @@ const saveCarsToLocalStorage = (cars: Car[]) => {
 
 const CarList: React.FC = () => {
   const [cars, setCars] = useState<Car[]>(loadCars())
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     saveCarsToLocalStorage(cars)
   }, [cars])
+
+  const handleOpen = (car: Car) => {
+    setSelectedCar(car)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setSelectedCar(null)
+  }
 
   return (
     <Box sx={{ p: 3 }}>
@@ -47,7 +58,7 @@ const CarList: React.FC = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={car.imageUrl} // Corrigido para usar a URL da imagem
+                image={car.imageUrl}
                 alt={car.name}
               />
               <CardContent>
@@ -70,8 +81,9 @@ const CarList: React.FC = () => {
                     variant="contained"
                     color="secondary"
                     style={{ marginLeft: 8 }}
-                    component={Link}
-                    to={`/car-details/${car.id}`}
+                    // component={Link}
+                    // to={`/car-details/${car.id}`}
+                    onClick={() => handleOpen(car)}
                   >
                     Visualizar
                   </Button>
@@ -81,6 +93,38 @@ const CarList: React.FC = () => {
           </Grid>
         ))}
       </Grid>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          {selectedCar && (
+            <Card sx={{ maxWidth: 600, margin: '0 auto', borderRadius: 2 }}>
+              <CardMedia
+                component="img"
+                image={selectedCar.imageUrl}
+                alt={selectedCar.model}
+              />
+              <CardContent sx={{ padding: 2 }}>
+                <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                  {selectedCar.model}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: 2 }}>
+                  {selectedCar.description}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: 'bold', color: 'success.main' }}
+                >
+                  R$ {selectedCar.rentalPricePerDay},00
+                </Typography>
+              </CardContent>
+            </Card>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 }
