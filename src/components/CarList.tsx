@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import CardMedia from '@mui/material/CardMedia'
 import {
@@ -15,29 +15,10 @@ import { Link } from 'react-router-dom'
 import carros from '../carros.json'
 import Car from '../types/car'
 
-const loadCars = (): Car[] => {
-  const storedCars = localStorage.getItem('cars')
-  const jsonCars = carros as Car[]
-  if (storedCars) {
-    const localCars = JSON.parse(storedCars) as Car[]
-    return [...jsonCars, ...localCars]
-  }
-  return jsonCars
-}
-
-const saveCarsToLocalStorage = (cars: Car[]) => {
-  const localCars = cars.filter((car) => car.id > 1000)
-  localStorage.setItem('cars', JSON.stringify(localCars))
-}
-
 const CarList: React.FC = () => {
-  const [cars] = useState<Car[]>(loadCars())
+  const [cars] = useState<Car[]>(carros as Car[])
   const [selectedCar, setSelectedCar] = useState<Car | null>(null)
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    saveCarsToLocalStorage(cars)
-  }, [cars])
 
   const handleOpen = (car: Car) => {
     setSelectedCar(car)
@@ -73,7 +54,7 @@ const CarList: React.FC = () => {
                     variant="contained"
                     color="primary"
                     component={Link}
-                    to={`/rent/${car.id}`}
+                    to={`/rent/${car.id}`} // Corrigido aqui
                   >
                     Alugar
                   </Button>
@@ -81,8 +62,6 @@ const CarList: React.FC = () => {
                     variant="contained"
                     color="secondary"
                     style={{ marginLeft: 8 }}
-                    // component={Link}
-                    // to={`/car-details/${car.id}`}
                     onClick={() => handleOpen(car)}
                   >
                     Visualizar
