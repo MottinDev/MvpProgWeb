@@ -31,7 +31,7 @@ const saveCarsToLocalStorage = (cars: Car[]) => {
 }
 
 const CarList: React.FC = () => {
-  const [cars, setCars] = useState<Car[]>(loadCars())
+  const [cars] = useState<Car[]>(loadCars())
   const [selectedCar, setSelectedCar] = useState<Car | null>(null)
   const [open, setOpen] = useState(false)
 

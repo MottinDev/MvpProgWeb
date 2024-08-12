@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
 import {
   Button,
@@ -64,15 +65,15 @@ export default function RentPage() {
     const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
   }
-
-  const handleSubmit = (values: {
-    name: string
-    email: string
-    phone: string
-    startDate: Date
-    endDate: Date
-    driverLicense: string
-  }) => {
+  //values: {
+  //name: string
+  //email: string
+  //phone: string
+  //startDate: Date
+  //endDate: Date
+  //driverLicense: string
+  //}
+  const handleSubmit = () => {
     setOpenDialog(true)
   }
 
@@ -119,7 +120,7 @@ export default function RentPage() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting, setFieldValue, values, touched, errors }) => (
+            {({ isSubmitting, setFieldValue, touched, errors }) => (
               <Form>
                 <Grid container spacing={2} sx={{ marginTop: 4 }}>
                   <Grid item xs={12} sm={6}>
